@@ -16,7 +16,7 @@ const commentReportSchema = new mongoose.Schema(
     reason: {
       type: String,
       required: true,
-      enum: ["spam", "harassment", "inappropriate", "hate_speech", "other"],
+      enum: ["spam", "harassment", "hate_speech", "misinformation", "copyright_violation", "inappropriate", "other"],
       default: "inappropriate",
     },
     details: {

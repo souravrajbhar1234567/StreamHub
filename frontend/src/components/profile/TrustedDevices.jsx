@@ -19,9 +19,14 @@ export default function TrustedDevices({ devices = [], onRemove }) {
                 )}
               </div>
               <div className="device-details">
-                <strong>{device.deviceName || "Personal Device"}</strong>
+                <div className="flex items-center gap-2">
+                  <strong>{device.deviceName || "Personal Device"}</strong>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-medium">
+                    Trusted Device
+                  </span>
+                </div>
                 <p className="text-xs text-muted">
-                  Last active: {formatDate(device.lastUsedAt)} • IP: {device.ipAddress}
+                  {device.city ? `${device.city}, ${device.country || "India"}` : device.ipAddress} • Last active: {formatDate(device.lastUsedAt)}
                 </p>
               </div>
               <button

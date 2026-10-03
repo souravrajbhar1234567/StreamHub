@@ -8,8 +8,9 @@ export const APP_NAME = "StreamHub";
 
 export const PLANS = {
   FREE: "Free",
-  PRO: "Pro",
-  PREMIUM: "Premium",
+  BRONZE: "Bronze",
+  SILVER: "Silver",
+  GOLD: "Gold",
 };
 
 export const CATEGORIES = [
@@ -24,7 +25,7 @@ export const CATEGORIES = [
   "Cloud",
 ];
 
-export const PLAYBACK_RATES = [0.5, 0.75, 1, 1.25, 1.5, 2];
+export const PLAYBACK_RATES = [0.5, 1, 1.25, 1.5, 2];
 
 export const VIDEO_QUALITIES = ["Auto", "360p", "720p", "1080p", "4K"];
 

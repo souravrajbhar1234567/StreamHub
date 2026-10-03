@@ -16,8 +16,8 @@ export const getCategories = async () => {
   return api.get("/videos/categories");
 };
 
-export const getComments = async (videoId) => {
-  return api.get(`/videos/${videoId}/comments`);
+export const getComments = async (videoId, params = {}) => {
+  return api.get(`/videos/${videoId}/comments`, { params });
 };
 
 export const addComment = async (videoId, data) => {

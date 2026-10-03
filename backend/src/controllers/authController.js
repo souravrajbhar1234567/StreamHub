@@ -28,8 +28,17 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
-    const result = await authService.login({ email, password, req });
+    const { email, password, otp } = req.body;
+    const result = await authService.login({ email, password, otp, req });
+
+    if (result.requiresOtp) {
+      logSecurityEvent("USER_LOGIN_OTP_CHALLENGE", req, { email });
+      return res.status(200).json({
+        success: true,
+        requiresOtp: true,
+        ...result,
+      });
+    }
 
     res.cookie("token", result.token, {
       httpOnly: true,

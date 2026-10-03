@@ -4,18 +4,19 @@ export default function DownloadQuota({ quota }) {
   if (!quota) return null;
 
   const used = quota.used || 0;
-  const limit = quota.downloadLimit || 0;
+  const limit = quota.downloadLimit || 1;
   const percent = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
+  const tier = quota.membership || "Free";
 
   return (
     <div className="download-quota-card">
       <div className="quota-header">
         <div className="quota-title">
           <HardDrive size={18} />
-          <span>Monthly Download Quota</span>
+          <span>Daily Download Quota ({tier} Plan)</span>
         </div>
         <span className="quota-numbers">
-          <strong>{used}</strong> / {limit === 0 ? "0 (Free Tier)" : `${limit} videos`}
+          <strong>{used}</strong> / {limit} video{limit === 1 ? "" : "s"} today
         </span>
       </div>
 
@@ -28,9 +29,9 @@ export default function DownloadQuota({ quota }) {
 
       <div className="quota-footer">
         <span className="text-xs text-muted">
-          {limit === 0
-            ? "Upgrade to Pro to download up to 25 videos offline every month."
-            : `${quota.remaining || 0} downloads remaining this month`}
+          {quota.remaining > 0
+            ? `${quota.remaining} download${quota.remaining === 1 ? "" : "s"} remaining today (Resets daily at 00:00 IST)`
+            : "Daily download limit reached. Upgrade your plan for higher daily limits or wait until tomorrow."}
         </span>
       </div>
     </div>

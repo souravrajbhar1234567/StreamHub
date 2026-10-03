@@ -33,6 +33,18 @@ const sessionSchema = new mongoose.Schema(
       type: String,
       default: "Desktop",
     },
+    city: {
+      type: String,
+      default: "Mumbai",
+    },
+    region: {
+      type: String,
+      default: "Maharashtra",
+    },
+    country: {
+      type: String,
+      default: "India",
+    },
     isValid: {
       type: Boolean,
       default: true,

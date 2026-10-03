@@ -1,5 +1,9 @@
 import api from "./api";
 
+export const updateComment = async (commentId, text) => {
+  return api.put(`/comments/${commentId}`, { text });
+};
+
 export const deleteComment = async (commentId) => {
   return api.delete(`/comments/${commentId}`);
 };

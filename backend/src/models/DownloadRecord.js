@@ -12,6 +12,7 @@ const downloadRecordSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Video",
       required: true,
+      index: true,
     },
     videoTitle: {
       type: String,
@@ -33,6 +34,22 @@ const downloadRecordSchema = new mongoose.Schema(
       type: String,
       enum: ["completed", "in_progress", "failed", "expired"],
       default: "completed",
+    },
+    ipAddress: {
+      type: String,
+      default: "127.0.0.1",
+    },
+    deviceInfo: {
+      type: String,
+      default: "Desktop",
+    },
+    browser: {
+      type: String,
+      default: "Chrome",
+    },
+    subscriptionPlan: {
+      type: String,
+      default: "Free",
     },
     expiresAt: {
       type: Date,

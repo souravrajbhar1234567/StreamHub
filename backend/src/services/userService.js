@@ -13,7 +13,7 @@ export const getProfile = async (userId) => {
 };
 
 export const updateProfile = async (userId, updateData) => {
-  const allowedFields = ["name", "bio", "avatar", "twoFactorEnabled"];
+  const allowedFields = ["name", "bio", "avatar", "twoFactorEnabled", "theme"];
   const filteredData = {};
   for (const field of allowedFields) {
     if (updateData[field] !== undefined) {

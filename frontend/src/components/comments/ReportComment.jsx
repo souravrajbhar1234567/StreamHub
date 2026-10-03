@@ -37,6 +37,8 @@ export default function ReportComment({ isOpen, onClose, commentId, onReportSubm
           <option value="spam">Spam or scam</option>
           <option value="harassment">Harassment or bullying</option>
           <option value="hate_speech">Hate speech</option>
+          <option value="misinformation">Misinformation</option>
+          <option value="copyright_violation">Copyright violation</option>
           <option value="inappropriate">Inappropriate content</option>
           <option value="other">Other issue</option>
         </select>

@@ -1,44 +1,65 @@
 import { Link } from "react-router-dom";
-import { Check, Crown, Zap } from "lucide-react";
+import { Check, Crown, Zap, Shield, Sparkles } from "lucide-react";
 
 const plans = [
   {
+    code: "free",
     name: "Free",
     price: "₹0",
-    description: "Get started with StreamHub",
+    description: "Get started with basic video learning",
     icon: Zap,
     features: [
-      "Watch free videos",
-      "Basic video quality",
-      "Create your profile",
-      "Comment on videos",
+      "Access to all free catalog videos",
+      "720p HD streaming",
+      "1 offline video download per day",
+      "Join public video meetings",
+      "Community comments & profile",
     ],
   },
   {
-    name: "Pro",
-    price: "₹299",
-    description: "For regular viewers",
+    code: "bronze",
+    name: "Bronze",
+    price: "₹199",
+    description: "For active students & learners",
+    icon: Shield,
+    features: [
+      "Full 1080p HD streaming",
+      "5 offline video downloads per day",
+      "Host video meetings up to 25 people",
+      "Resume watch progress across devices",
+      "Up to 2 simultaneous devices",
+    ],
+  },
+  {
+    code: "silver",
+    name: "Silver",
+    price: "₹499",
+    description: "Most popular for professionals",
     icon: Crown,
     popular: true,
     features: [
-      "HD video streaming",
-      "Download videos",
-      "Watch history",
-      "Priority support",
-      "No advertisements",
+      "1080p Full HD high bitrate",
+      "15 offline video downloads per day",
+      "Host meetings up to 50 participants",
+      "Screen sharing & in-call file transfer",
+      "100% ad-free video experience",
+      "Up to 3 simultaneous devices",
     ],
   },
   {
-    name: "Premium",
-    price: "₹599",
-    description: "Complete StreamHub experience",
-    icon: Crown,
+    code: "gold",
+    name: "Gold",
+    price: "₹999",
+    description: "Complete masterclass & executive suite",
+    icon: Sparkles,
     features: [
-      "4K video streaming",
-      "Unlimited downloads",
-      "Premium content",
-      "Online meetings",
-      "Priority support",
+      "Ultra HD 4K cinema streaming",
+      "50 offline downloads / day (Unlimited tier)",
+      "Exclusive masterclasses & webinars",
+      "Host meetings up to 100 participants",
+      "Meeting recording & transcript access",
+      "Up to 5 simultaneous devices",
+      "Priority 24/7 VIP support",
     ],
   },
 ];
@@ -48,11 +69,10 @@ export default function Pricing() {
     <div className="page-container">
       <section className="pricing-header">
         <span className="eyebrow">STREAMHUB PLANS</span>
-
-        <h1>Choose your experience</h1>
-
+        <h1>Choose Your Experience</h1>
         <p>
-          Start free and upgrade whenever you want more features.
+          Start with Free or unlock enhanced downloads, high-definition streaming,
+          and group video calling with Bronze, Silver, or Gold.
         </p>
       </section>
 
@@ -68,7 +88,7 @@ export default function Pricing() {
               key={plan.name}
             >
               {plan.popular && (
-                <div className="popular-badge">MOST POPULAR</div>
+                <div className="popular-badge">RECOMMENDED</div>
               )}
 
               <div className="plan-icon">
@@ -76,42 +96,29 @@ export default function Pricing() {
               </div>
 
               <h2>{plan.name}</h2>
-
-              <p className="plan-description">
-                {plan.description}
-              </p>
+              <p className="plan-description">{plan.description}</p>
 
               <div className="plan-price">
                 {plan.price}
-                {plan.name !== "Free" && (
-                  <span>/month</span>
-                )}
+                {plan.name !== "Free" && <span>/month</span>}
               </div>
 
               <ul className="plan-features">
                 {plan.features.map((feature) => (
                   <li key={feature}>
                     <Check size={17} />
-                    {feature}
+                    <span>{feature}</span>
                   </li>
                 ))}
               </ul>
 
               <Link
-                to={
-                  plan.name === "Free"
-                    ? "/register"
-                    : "/plans"
-                }
+                to={plan.name === "Free" ? "/register" : `/checkout?plan=${plan.code}`}
                 className={`btn ${
-                  plan.popular
-                    ? "btn-primary"
-                    : "btn-outline"
+                  plan.popular ? "btn-primary" : "btn-outline"
                 } plan-button`}
               >
-                {plan.name === "Free"
-                  ? "Get Started"
-                  : "Choose Plan"}
+                {plan.name === "Free" ? "Get Started Free" : `Upgrade to ${plan.name}`}
               </Link>
             </div>
           );

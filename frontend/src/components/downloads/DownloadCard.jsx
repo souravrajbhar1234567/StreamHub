@@ -22,7 +22,13 @@ export default function DownloadCard({ record, onDelete }) {
 
       <div className="download-card-content">
         <h4>{video.title}</h4>
-        <div className="download-card-meta">
+        <div className="download-card-meta flex flex-wrap items-center gap-2 mt-1">
+          <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-purple-500/20 text-purple-300">
+            {record.subscriptionPlan || "Free"} Plan
+          </span>
+          <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/20 text-emerald-400">
+            {record.status === "completed" ? "Downloaded" : record.status}
+          </span>
           <span className="quality-tag">{record.quality}</span>
           <span>•</span>
           <span className="size-tag flex items-center gap-1">

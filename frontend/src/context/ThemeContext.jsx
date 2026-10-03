@@ -2,9 +2,20 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const ThemeContext = createContext(null);
 
+export const getISTDefaultTheme = () => {
+  const now = new Date();
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  const istDate = new Date(utc + (5.5 * 60 * 60 * 1000));
+  const istHours = istDate.getHours();
+  // 5:00 AM to 12:00 PM IST is light theme, otherwise dark
+  return (istHours >= 5 && istHours < 12) ? "light" : "dark";
+};
+
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("streamhub_theme") || "dark";
+    const saved = localStorage.getItem("streamhub_theme");
+    if (saved) return saved;
+    return getISTDefaultTheme();
   });
 
   useEffect(() => {
@@ -18,11 +29,21 @@ export function ThemeProvider({ children }) {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    setTheme((prev) => {
+      const next = prev === "dark" ? "light" : "dark";
+      localStorage.setItem("streamhub_theme", next);
+      return next;
+    });
+  };
+
+  const applyThemeFromUser = (userTheme) => {
+    if (userTheme && (userTheme === "light" || userTheme === "dark")) {
+      setTheme(userTheme);
+    }
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme, applyThemeFromUser, getISTDefaultTheme }}>
       {children}
     </ThemeContext.Provider>
   );

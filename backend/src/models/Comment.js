@@ -37,6 +37,22 @@ const commentSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    editedAt: {
+      type: Date,
+      default: null,
+    },
+    userLocation: {
+      type: String,
+      default: "India",
+    },
+    mentions: {
+      type: [String],
+      default: [],
+    },
+    language: {
+      type: String,
+      default: "en",
+    },
     isModerated: {
       type: Boolean,
       default: false,

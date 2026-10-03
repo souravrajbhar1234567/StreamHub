@@ -8,7 +8,8 @@ export const downloadVideo = async (req, res, next) => {
     const result = await downloadService.initiateDownload(
       req.user._id,
       id,
-      quality || "720p"
+      quality || "720p",
+      req
     );
     res.status(200).json({
       success: true,

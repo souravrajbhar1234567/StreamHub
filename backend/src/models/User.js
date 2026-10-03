@@ -28,8 +28,13 @@ const userSchema = new mongoose.Schema(
     },
     membership: {
       type: String,
-      enum: ["Free", "Pro", "Premium"],
+      enum: ["Free", "Bronze", "Silver", "Gold", "Pro", "Premium"],
       default: "Free",
+    },
+    theme: {
+      type: String,
+      enum: ["light", "dark"],
+      default: null,
     },
     avatar: {
       type: String,

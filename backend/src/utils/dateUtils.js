@@ -15,6 +15,18 @@ export const isExpired = (expiryDate) => {
   return new Date() > new Date(expiryDate);
 };
 
+export const getStartOfDay = (date = new Date()) => {
+  const result = new Date(date);
+  result.setHours(0, 0, 0, 0);
+  return result;
+};
+
+export const getEndOfDay = (date = new Date()) => {
+  const result = new Date(date);
+  result.setHours(23, 59, 59, 999);
+  return result;
+};
+
 export const getStartOfMonth = () => {
   const now = new Date();
   return new Date(now.getFullYear(), now.getMonth(), 1);
@@ -25,4 +37,4 @@ export const getEndOfMonth = () => {
   return new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
 };
 
-export default { addDays, addMonths, isExpired, getStartOfMonth, getEndOfMonth };
+export default { addDays, addMonths, isExpired, getStartOfDay, getEndOfDay, getStartOfMonth, getEndOfMonth };

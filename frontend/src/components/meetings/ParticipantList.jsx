@@ -1,7 +1,16 @@
 import { X, Users } from "lucide-react";
 import ParticipantCard from "./ParticipantCard";
 
-export default function ParticipantList({ isOpen, onClose, participants = [], hostName }) {
+export default function ParticipantList({
+  isOpen,
+  onClose,
+  participants = [],
+  hostName,
+  currentUserIsHost = false,
+  onMuteParticipant,
+  onRemoveParticipant,
+  onAssignCohost,
+}) {
   if (!isOpen) return null;
 
   return (
@@ -22,6 +31,10 @@ export default function ParticipantList({ isOpen, onClose, participants = [], ho
             key={p.socketId || p._id}
             participant={p}
             isHost={p.displayName === hostName}
+            currentUserIsHost={currentUserIsHost}
+            onMute={onMuteParticipant}
+            onRemove={onRemoveParticipant}
+            onAssignCohost={onAssignCohost}
           />
         ))}
       </div>

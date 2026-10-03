@@ -28,6 +28,18 @@ const trustedDeviceSchema = new mongoose.Schema(
       type: String,
       default: "127.0.0.1",
     },
+    city: {
+      type: String,
+      default: "Mumbai",
+    },
+    region: {
+      type: String,
+      default: "Maharashtra",
+    },
+    country: {
+      type: String,
+      default: "India",
+    },
     lastUsedAt: {
       type: Date,
       default: Date.now,
@@ -35,6 +47,10 @@ const trustedDeviceSchema = new mongoose.Schema(
     isTrusted: {
       type: Boolean,
       default: true,
+    },
+    expiresAt: {
+      type: Date,
+      default: () => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days trusted validity
     },
   },
   {

@@ -2,9 +2,13 @@ import commentService from "../services/commentService.js";
 import moderationService from "../services/moderationService.js";
 import translationService from "../services/translationService.js";
 
+import { getClientIp } from "../utils/ipUtils.js";
+import { lookupIpLocation } from "../services/geoLocationService.js";
+
 export const getComments = async (req, res, next) => {
   try {
-    const comments = await commentService.getComments(req.params.videoId);
+    const { sort } = req.query;
+    const comments = await commentService.getComments(req.params.videoId, sort || "newest");
     res.status(200).json({ success: true, comments });
   } catch (error) {
     next(error);
@@ -13,14 +17,36 @@ export const getComments = async (req, res, next) => {
 
 export const addComment = async (req, res, next) => {
   try {
+    const ip = getClientIp(req);
+    const loc = await lookupIpLocation(ip);
+    const userLocation = loc ? `${loc.city}, ${loc.country}` : "India";
+
     const comment = await commentService.addComment(
       req.user._id,
       req.params.videoId,
-      req.body
+      { ...req.body, userLocation }
     );
     res.status(201).json({
       success: true,
       message: "Comment posted.",
+      comment,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const editComment = async (req, res, next) => {
+  try {
+    const { text } = req.body;
+    const comment = await commentService.editComment(
+      req.user._id,
+      req.params.commentId,
+      text
+    );
+    res.status(200).json({
+      success: true,
+      message: "Comment updated.",
       comment,
     });
   } catch (error) {
@@ -85,6 +111,7 @@ export const translateComment = async (req, res, next) => {
 export default {
   getComments,
   addComment,
+  editComment,
   deleteComment,
   reactToComment,
   reportComment,

@@ -50,6 +50,10 @@ export function AuthProvider({ children }) {
 
     const data = response.data;
 
+    if (data.requiresOtp) {
+      return data;
+    }
+
     const token =
       data.token ||
       data.accessToken ||
@@ -57,6 +61,16 @@ export function AuthProvider({ children }) {
 
     if (token) {
       localStorage.setItem("streamhub_token", token);
+    }
+
+    if (data.user?.theme) {
+      localStorage.setItem("streamhub_theme", data.user.theme);
+      document.documentElement.setAttribute("data-theme", data.user.theme);
+      if (data.user.theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
     }
 
     setUser(

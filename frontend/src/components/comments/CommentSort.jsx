@@ -11,7 +11,9 @@ export default function CommentSort({ sort = "newest", onSortChange }) {
         aria-label="Sort comments"
       >
         <option value="newest">Newest first</option>
-        <option value="top">Top comments</option>
+        <option value="oldest">Oldest first</option>
+        <option value="most_liked">Most liked</option>
+        <option value="most_relevant">Most relevant</option>
       </select>
     </div>
   );

@@ -17,14 +17,28 @@ export default function MeetingRoom({ roomId, onLeaveRoom }) {
     isVideoMuted,
     isScreenSharing,
     isHandRaised,
+    isSpeaking,
     messages,
     callDuration,
+    isRecording,
+    recordingDuration,
+    isRoomLocked,
+    roomPermissions,
     leaveRoom,
     toggleAudio,
     toggleVideo,
+    switchCamera,
     toggleHand,
     toggleScreenShare,
     sendChatMessage,
+    startRecording,
+    stopRecording,
+    muteParticipant,
+    muteAllParticipants,
+    removeParticipant,
+    toggleRoomLock,
+    assignCohost,
+    updatePermissions,
   } = useMeeting();
 
   const { remoteStreams } = useWebRTC(roomId, localStream);
@@ -32,7 +46,11 @@ export default function MeetingRoom({ roomId, onLeaveRoom }) {
   const [showChat, setShowChat] = useState(false);
   const [showParticipants, setShowParticipants] = useState(false);
 
-  const isHost = meeting?.host === user?._id || meeting?.host?._id === user?._id;
+  const isHost =
+    meeting?.host === user?._id ||
+    meeting?.host?._id === user?._id ||
+    participants.find((p) => p.userId === user?._id)?.role === "host" ||
+    participants[0]?.userId === user?._id;
 
   const handleLeave = () => {
     leaveRoom();
@@ -70,6 +88,10 @@ export default function MeetingRoom({ roomId, onLeaveRoom }) {
         onClose={() => setShowParticipants(false)}
         participants={participants}
         hostName={meeting?.hostName}
+        currentUserIsHost={isHost}
+        onMuteParticipant={muteParticipant}
+        onRemoveParticipant={removeParticipant}
+        onAssignCohost={assignCohost}
       />
 
       <MeetingControls
@@ -77,13 +99,24 @@ export default function MeetingRoom({ roomId, onLeaveRoom }) {
         isVideoOff={isVideoMuted}
         isScreenSharing={isScreenSharing}
         isHandRaised={isHandRaised}
+        isSpeaking={isSpeaking}
         participantsCount={participants.length || 1}
         callDuration={callDuration}
         isHost={isHost}
+        isRecording={isRecording}
+        recordingDuration={recordingDuration}
+        isRoomLocked={isRoomLocked}
+        roomPermissions={roomPermissions}
         onToggleAudio={toggleAudio}
         onToggleVideo={toggleVideo}
+        onSwitchCamera={switchCamera}
         onToggleScreenShare={toggleScreenShare}
         onToggleHand={toggleHand}
+        onStartRecording={startRecording}
+        onStopRecording={stopRecording}
+        onMuteAll={muteAllParticipants}
+        onLockRoom={toggleRoomLock}
+        onUpdatePermissions={updatePermissions}
         onToggleChat={() => {
           setShowChat(!showChat);
           if (!showChat) setShowParticipants(false);

@@ -6,6 +6,7 @@ import { reportCommentValidator } from "../validators/commentValidator.js";
 
 const router = express.Router();
 
+router.put("/:commentId", protect, commentController.editComment);
 router.delete("/:commentId", protect, commentController.deleteComment);
 router.post("/:commentId/react", protect, commentController.reactToComment);
 router.post(

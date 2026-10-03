@@ -5,7 +5,7 @@ import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 import CommentSort from "./CommentSort";
 import { getComments, addComment } from "../../services/videoApi";
-import { deleteComment, reactToComment } from "../../services/commentApi";
+import { deleteComment, reactToComment, updateComment } from "../../services/commentApi";
 
 export default function CommentSection({ videoId, currentUser }) {
   const [comments, setComments] = useState([]);
@@ -17,14 +17,14 @@ export default function CommentSection({ videoId, currentUser }) {
     if (!videoId) return;
     try {
       setLoading(true);
-      const res = await getComments(videoId);
+      const res = await getComments(videoId, { sort });
       setComments(res.data.comments || res.data.data || []);
     } catch (err) {
       console.warn("Failed to load comments:", err.message);
     } finally {
       setLoading(false);
     }
-  }, [videoId]);
+  }, [videoId, sort]);
 
   useEffect(() => {
     fetchComments();
@@ -93,6 +93,11 @@ export default function CommentSection({ videoId, currentUser }) {
     }
   };
 
+  const handleEditComment = async (commentId, text) => {
+    await updateComment(commentId, text);
+    fetchComments();
+  };
+
   return (
     <section className="comments-section-container">
       <div className="comments-header">
@@ -134,6 +139,7 @@ export default function CommentSection({ videoId, currentUser }) {
               currentUser={currentUser}
               onLike={handleLike}
               onDislike={handleDislike}
+              onEdit={handleEditComment}
               onDelete={handleDelete}
               onAddReply={handleAddReply}
             />
