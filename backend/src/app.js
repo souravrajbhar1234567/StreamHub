@@ -72,20 +72,22 @@ app.get(["/", "/api/health"], (req, res) => {
 });
 
 // ===============================
-// API ROUTES
+// API ROUTES (Supports both /api and /api/v1)
 // ===============================
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/videos", videoRoutes);
-app.use("/api/watch", watchRoutes);
-app.use("/api/subscriptions", subscriptionRoutes);
-app.use("/api/payments", paymentRoutes);
-app.use("/api/comments", commentRoutes);
-app.use("/api/meetings", meetingRoutes);
-app.use("/api/downloads", downloadRoutes);
-app.use("/api/admin", adminRoutes);
-app.use("/api/security", securityRoutes);
-app.use("/api/notifications", notificationRoutes);
+["/api", "/api/v1"].forEach((prefix) => {
+  app.use(`${prefix}/auth`, authRoutes);
+  app.use(`${prefix}/users`, userRoutes);
+  app.use(`${prefix}/videos`, videoRoutes);
+  app.use(`${prefix}/watch`, watchRoutes);
+  app.use(`${prefix}/subscriptions`, subscriptionRoutes);
+  app.use(`${prefix}/payments`, paymentRoutes);
+  app.use(`${prefix}/comments`, commentRoutes);
+  app.use(`${prefix}/meetings`, meetingRoutes);
+  app.use(`${prefix}/downloads`, downloadRoutes);
+  app.use(`${prefix}/admin`, adminRoutes);
+  app.use(`${prefix}/security`, securityRoutes);
+  app.use(`${prefix}/notifications`, notificationRoutes);
+});
 
 // ===============================
 // ERROR HANDLING
