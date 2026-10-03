@@ -16,9 +16,14 @@ export const getInvoice = async (paymentId) => {
   return api.get(`/payments/invoice/${paymentId}`);
 };
 
+export const getRazorpayKey = async () => {
+  return api.get("/payments/key");
+};
+
 export default {
   createPaymentOrder,
   verifyPayment,
   getPaymentHistory,
   getInvoice,
+  getRazorpayKey,
 };

@@ -25,6 +25,7 @@ router.post(
   paymentController.verifyPayment
 );
 
+router.get("/key", paymentController.getRazorpayKey);
 router.get("/history", paymentController.getPaymentHistory);
 router.get("/invoice/:paymentId", paymentController.getInvoice);
 

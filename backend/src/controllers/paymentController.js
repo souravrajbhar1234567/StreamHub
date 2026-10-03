@@ -47,9 +47,17 @@ export const getInvoice = async (req, res, next) => {
   }
 };
 
+export const getRazorpayKey = (req, res) => {
+  res.status(200).json({
+    success: true,
+    keyId: process.env.RAZORPAY_KEY_ID || "rzp_test_TKoITn9CbU2KXq",
+  });
+};
+
 export default {
   createOrder,
   verifyPayment,
   getPaymentHistory,
   getInvoice,
+  getRazorpayKey,
 };

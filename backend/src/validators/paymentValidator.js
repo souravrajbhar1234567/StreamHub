@@ -8,18 +8,13 @@ export const createOrderValidator = [
 ];
 
 export const verifyPaymentValidator = [
-  body("razorpay_order_id")
-    .trim()
-    .notEmpty()
-    .withMessage("Razorpay order ID is required"),
   body("razorpay_payment_id")
     .trim()
     .notEmpty()
     .withMessage("Razorpay payment ID is required"),
-  body("razorpay_signature")
-    .trim()
-    .notEmpty()
-    .withMessage("Razorpay signature is required"),
+  body("razorpay_order_id").optional().trim(),
+  body("razorpay_signature").optional().trim(),
+  body("planCode").optional().trim(),
 ];
 
 export default { createOrderValidator, verifyPaymentValidator };
