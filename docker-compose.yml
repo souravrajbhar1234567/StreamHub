@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # MongoDB Database Service
+  mongodb:
+    image: mongo:7.0
+    container_name: streamhub-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: streamhub
+    volumes:
+      - mongo_data:/data/db
+
+  # Redis In-Memory Cache Service
+  redis:
+    image: redis:7.2-alpine
+    container_name: streamhub-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # Backend API & WebSocket Server
+  backend:
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile.backend
+    container_name: streamhub-backend
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      PORT: 5001
+      NODE_ENV: production
+      MONGO_URI: mongodb://mongodb:27017/streamhub
+      REDIS_URL: redis://redis:6379
+      CLIENT_URL: http://localhost:80
+      JWT_SECRET: streamhub_production_jwt_secret_key_12345
+      JWT_EXPIRE: 7d
+      REFRESH_TOKEN_SECRET: streamhub_production_refresh_token_secret_12345
+      ENCRYPTION_KEY: 0123456789abcdef0123456789abcdef
+      RAZORPAY_KEY_ID: rzp_test_StreamHubKey123
+      RAZORPAY_KEY_SECRET: streamhub_razorpay_secret_test_key_123
+    depends_on:
+      - mongodb
+      - redis
+
+  # Frontend Web Client
+  frontend:
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile.frontend
+    container_name: streamhub-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
+  redis_data:

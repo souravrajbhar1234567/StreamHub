@@ -1,0 +1,21 @@
+import nodemailer from "nodemailer";
+import { ENV } from "./env.js";
+
+let transporter = null;
+
+try {
+  transporter = nodemailer.createTransport({
+    host: ENV.SMTP_HOST,
+    port: ENV.SMTP_PORT,
+    secure: ENV.SMTP_PORT === 465,
+    auth: {
+      user: ENV.SMTP_USER,
+      pass: ENV.SMTP_PASSWORD,
+    },
+  });
+} catch (error) {
+  console.warn("⚠️ Nodemailer transporter warning:", error.message);
+}
+
+export const getTransporter = () => transporter;
+export default transporter;

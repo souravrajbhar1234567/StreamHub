@@ -1,0 +1,26 @@
+{
+  "name": "streamhub",
+  "version": "1.0.0",
+  "description": "StreamHub - Video Streaming, Meetings, and Learning SaaS Platform",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run server --prefix backend\" \"npm run dev --prefix frontend\"",
+    "start": "npm run start --prefix backend",
+    "backend": "npm run dev --prefix backend",
+    "frontend": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "test": "node --test tests/backend/*.test.js"
+  },
+  "keywords": [
+    "streamhub",
+    "video-streaming",
+    "webrtc",
+    "socketio",
+    "react19",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "StreamHub Team",
+  "license": "MIT"
+}
