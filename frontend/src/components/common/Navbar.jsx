@@ -61,11 +61,23 @@ export default function Navbar() {
             </Link>
 
             <button
-              className="icon-btn logout-btn"
+              className="btn btn-ghost logout-btn"
               onClick={handleLogout}
               title="Logout"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                color: "#f87171",
+                padding: "6px 12px",
+                borderRadius: "8px",
+                fontSize: "13px",
+                fontWeight: 500,
+                cursor: "pointer",
+              }}
             >
-              <LogOut size={18} />
+              <LogOut size={16} />
+              <span>Logout</span>
             </button>
           </div>
         ) : (

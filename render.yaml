@@ -1,0 +1,39 @@
+services:
+  # Backend API & Socket Service
+  - type: web
+    name: streamhub-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5001
+      - key: CLIENT_URL
+        value: https://streamhub-frontend-ceoi.onrender.com
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+
+  # Frontend Web Client
+  - type: web
+    name: streamhub-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://streamhub-backend-zlf8.onrender.com/api
+      - key: VITE_SOCKET_URL
+        value: https://streamhub-backend-zlf8.onrender.com

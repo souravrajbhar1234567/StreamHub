@@ -1,8 +1,38 @@
-export const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:5001/api";
+const resolveApiUrl = () => {
+  let url = import.meta.env.VITE_API_URL;
+  if (typeof window !== "undefined") {
+    const isLocal =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+    if (!isLocal && (!url || url.includes("localhost") || url.includes("127.0.0.1"))) {
+      return "https://streamhub-backend-zlf8.onrender.com/api";
+    }
+  }
+  if (!url) return "http://localhost:5001/api";
+  url = url.trim();
+  if (!url.startsWith("http://") && !url.startsWith("https://")) url = `https://${url}`;
+  if (!url.endsWith("/api")) url = url.replace(/\/$/, "") + "/api";
+  return url;
+};
 
-export const SOCKET_URL =
-  import.meta.env.VITE_SOCKET_URL || "http://localhost:5001";
+const resolveSocketUrl = () => {
+  let url = import.meta.env.VITE_SOCKET_URL;
+  if (typeof window !== "undefined") {
+    const isLocal =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+    if (!isLocal && (!url || url.includes("localhost") || url.includes("127.0.0.1"))) {
+      return "https://streamhub-backend-zlf8.onrender.com";
+    }
+  }
+  if (!url) return "http://localhost:5001";
+  url = url.trim();
+  if (!url.startsWith("http://") && !url.startsWith("https://")) url = `https://${url}`;
+  return url.replace(/\/$/, "").replace(/\/api$/, "");
+};
+
+export const API_BASE_URL = resolveApiUrl();
+export const SOCKET_URL = resolveSocketUrl();
 
 export const APP_NAME = "StreamHub";
 

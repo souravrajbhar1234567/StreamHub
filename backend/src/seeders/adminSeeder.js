@@ -11,13 +11,28 @@ export const seedAdmin = async () => {
         email: adminEmail,
         password: "AdminPassword123!",
         role: "admin",
-        membership: "Premium",
+        membership: "Gold",
         isEmailVerified: true,
       });
       console.log("🌱 Admin user seeded: admin@streamhub.com / AdminPassword123!");
     }
+
+    const demoUserEmail = "user@streamhub.com";
+    const existingDemoUser = await User.findOne({ email: demoUserEmail });
+
+    if (!existingDemoUser) {
+      await User.create({
+        name: "StreamHub User",
+        email: demoUserEmail,
+        password: "UserPassword123!",
+        role: "user",
+        membership: "Free",
+        isEmailVerified: true,
+      });
+      console.log("🌱 Demo user seeded: user@streamhub.com / UserPassword123!");
+    }
   } catch (error) {
-    console.error("❌ Admin seeding error:", error.message);
+    console.error("❌ Admin/User seeding error:", error.message);
   }
 };
 

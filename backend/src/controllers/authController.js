@@ -3,16 +3,39 @@ import Session from "../models/Session.js";
 import { hashString } from "../utils/encryption.js";
 import { logSecurityEvent } from "../middleware/securityMiddleware.js";
 
+const getCookieOptions = (req) => {
+  const isHttps =
+    process.env.NODE_ENV === "production" ||
+    req?.secure ||
+    req?.headers?.["x-forwarded-proto"] === "https";
+
+  return {
+    httpOnly: true,
+    secure: isHttps,
+    sameSite: isHttps ? "none" : "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  };
+};
+
+const getClearCookieOptions = (req) => {
+  const isHttps =
+    process.env.NODE_ENV === "production" ||
+    req?.secure ||
+    req?.headers?.["x-forwarded-proto"] === "https";
+
+  return {
+    httpOnly: true,
+    secure: isHttps,
+    sameSite: isHttps ? "none" : "lax",
+  };
+};
+
 export const register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
     const result = await authService.register({ name, email, password });
 
-    res.cookie("token", result.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie("token", result.token, getCookieOptions(req));
 
     logSecurityEvent("USER_REGISTER", req, { email });
 
@@ -40,11 +63,7 @@ export const login = async (req, res, next) => {
       });
     }
 
-    res.cookie("token", result.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    res.cookie("token", result.token, getCookieOptions(req));
 
     logSecurityEvent("USER_LOGIN_SUCCESS", req, { email });
 
@@ -77,7 +96,7 @@ export const logout = async (req, res, next) => {
       await Session.findOneAndUpdate({ tokenHash }, { isValid: false });
     }
 
-    res.clearCookie("token");
+    res.clearCookie("token", getClearCookieOptions(req));
 
     logSecurityEvent("USER_LOGOUT", req);
 

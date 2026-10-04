@@ -7,7 +7,10 @@ import { registerPresenceSocket } from "./presenceSocket.js";
 export const initSocketServer = (httpServer, clientUrl) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: clientUrl || "http://localhost:5173",
+      origin: (origin, callback) => {
+        // Allow all frontend origins with credentials
+        callback(null, true);
+      },
       credentials: true,
       methods: ["GET", "POST"],
     },

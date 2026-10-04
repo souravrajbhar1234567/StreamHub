@@ -148,19 +148,25 @@ export default function Login() {
 
             <div
               style={{
-                padding: "10px 14px",
-                marginBottom: "16px",
-                borderRadius: "10px",
+                padding: "12px 14px",
+                marginBottom: "18px",
+                borderRadius: "12px",
                 background: "rgba(99, 102, 241, 0.08)",
                 border: "1px solid rgba(99, 102, 241, 0.25)",
                 display: "flex",
                 flexDirection: "column",
-                gap: "6px",
+                gap: "10px",
                 fontSize: "12px",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontWeight: 600, color: "var(--primary)" }}>⚡ Quick Demo Credentials</span>
+                <span style={{ fontWeight: 600, color: "var(--primary)", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <span>⚡ Quick Demo Credentials</span>
+                </span>
+                <span style={{ fontSize: "11px", color: "var(--text-muted)" }}>1-Click Auto Fill</span>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                 <button
                   type="button"
                   onClick={() => {
@@ -171,22 +177,52 @@ export default function Login() {
                     setError("");
                   }}
                   style={{
-                    background: "var(--primary)",
+                    background: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)",
                     color: "#fff",
                     border: "none",
-                    borderRadius: "6px",
-                    padding: "3px 10px",
+                    borderRadius: "8px",
+                    padding: "7px 10px",
                     fontSize: "11px",
                     fontWeight: 600,
                     cursor: "pointer",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "2px",
+                    boxShadow: "0 2px 8px rgba(79, 70, 229, 0.25)",
                   }}
                 >
-                  Fill Admin
+                  <span>👑 Admin Demo</span>
+                  <span style={{ fontSize: "10px", opacity: 0.85, fontWeight: 400 }}>admin@streamhub.com</span>
                 </button>
-              </div>
-              <div style={{ color: "var(--text-muted)", fontSize: "11px", display: "flex", justifyContent: "space-between" }}>
-                <span>Email: <code style={{ color: "var(--text-primary)" }}>admin@streamhub.com</code></span>
-                <span>Pass: <code style={{ color: "var(--text-primary)" }}>AdminPassword123!</code></span>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setForm({
+                      email: "user@streamhub.com",
+                      password: "UserPassword123!",
+                    });
+                    setError("");
+                  }}
+                  style={{
+                    background: "rgba(255, 255, 255, 0.07)",
+                    color: "var(--text-primary)",
+                    border: "1px solid rgba(255, 255, 255, 0.15)",
+                    borderRadius: "8px",
+                    padding: "7px 10px",
+                    fontSize: "11px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "2px",
+                  }}
+                >
+                  <span>👤 User Demo</span>
+                  <span style={{ fontSize: "10px", opacity: 0.85, fontWeight: 400 }}>user@streamhub.com</span>
+                </button>
               </div>
             </div>
 
