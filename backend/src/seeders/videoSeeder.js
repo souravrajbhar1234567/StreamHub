@@ -3,7 +3,23 @@ import Video from "../models/Video.js";
 export const seedVideos = async () => {
   try {
     const count = await Video.countDocuments();
-    if (count > 0) return;
+    if (count > 0) {
+      // Auto-repair any outdated or broken 404 thumbnail URLs
+      await Video.updateMany(
+        {
+          $or: [
+            { thumbnailUrl: { $regex: "1581291518655" } },
+            { title: { $regex: "Modern UI/UX Design Systems", $options: "i" } }
+          ]
+        },
+        {
+          $set: {
+            thumbnailUrl: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=900&q=80"
+          }
+        }
+      );
+      return;
+    }
 
     const sampleVideos = [
       {
@@ -67,7 +83,7 @@ export const seedVideos = async () => {
         videoUrl:
           "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
         thumbnailUrl:
-          "https://images.unsplash.com/photo-1581291518655-9523c932edcf?auto=format&fit=crop&w=900&q=80",
+          "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=900&q=80",
         duration: "18:05",
         durationSeconds: 1085,
         category: "Design",

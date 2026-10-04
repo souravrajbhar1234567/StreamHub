@@ -14,7 +14,14 @@ export default function DownloadCard({ record, onDelete }) {
   return (
     <div className="download-card">
       <div className="download-card-thumb">
-        <img src={video.thumbnailUrl} alt={video.title} />
+        <img
+          src={video.thumbnailUrl}
+          alt={video.title}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
+          }}
+        />
         <Link to={`/watch/${videoId}`} className="download-play-overlay">
           <PlayCircle size={32} />
         </Link>

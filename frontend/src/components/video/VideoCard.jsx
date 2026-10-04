@@ -11,10 +11,21 @@ export default function VideoCard({ video }) {
     video.thumbnail ||
     "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=900&q=80";
 
+  const DEFAULT_FALLBACK =
+    "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=900&q=80";
+
   return (
     <Link to={`/watch/${id}`} className="video-card">
       <div className="thumb-wrap">
-        <img src={thumbnail} alt={title} loading="lazy" />
+        <img
+          src={thumbnail}
+          alt={title}
+          loading="lazy"
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = DEFAULT_FALLBACK;
+          }}
+        />
 
         {video.isPremium && (
           <span className="premium-badge" title="Premium Content">

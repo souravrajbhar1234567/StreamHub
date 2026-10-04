@@ -68,6 +68,10 @@ export default function WatchHistory() {
                   src={video.thumbnailUrl}
                   alt={video.title}
                   className="history-thumb"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
+                  }}
                 />
 
                 <div className="history-details">

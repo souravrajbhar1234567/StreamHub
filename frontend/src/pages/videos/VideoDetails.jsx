@@ -30,7 +30,14 @@ export default function VideoDetails() {
 
       <div className="video-details-hero">
         <div className="video-details-thumb">
-          <img src={video.thumbnailUrl} alt={video.title} />
+          <img
+            src={video.thumbnailUrl}
+            alt={video.title}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=900&q=80";
+            }}
+          />
           <Link to={`/watch/${video._id}`} className="play-button-overlay">
             <Play size={48} fill="white" />
           </Link>

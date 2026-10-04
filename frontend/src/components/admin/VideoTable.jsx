@@ -26,6 +26,10 @@ export default function VideoTable({ videos = [], onDelete, onTogglePremium }) {
                     src={v.thumbnailUrl}
                     alt={v.title}
                     className="admin-video-thumb"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
+                    }}
                   />
                   <div>
                     <strong className="block text-sm">{v.title}</strong>

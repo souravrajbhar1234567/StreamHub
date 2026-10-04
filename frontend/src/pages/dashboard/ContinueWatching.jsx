@@ -40,7 +40,14 @@ export default function ContinueWatching() {
             className="continue-card"
           >
             <div className="continue-thumb">
-              <img src={video.thumbnailUrl} alt={video.title} />
+              <img
+                src={video.thumbnailUrl}
+                alt={video.title}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80";
+                }}
+              />
               <div className="continue-progress-bar">
                 <div
                   className="continue-progress-fill"
